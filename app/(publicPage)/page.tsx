@@ -1,6 +1,14 @@
+import Banner from "@/sections/Banner";
+import HeroSection from "@/sections/HeroSection";
+import SpecialtyMenu from "@/sections/SpecialtyMenu";
+import TopDoctor from "@/sections/TopDoctor";
+
 const page = () => {
     return ( <>
-    <h1>Home page</h1>
+    <HeroSection/>
+    <SpecialtyMenu/>
+    <TopDoctor/>
+    <Banner/>
     </> );
 }
  

@@ -37,9 +37,15 @@ import Gynecologist from './Gynecologist.svg'
 import Neurologist from './Neurologist.svg'
 import Pediatricians from './Pediatricians.svg'
 import { StaticImageData } from 'next/image'
+import header1 from './11513829.jpg'
+import header2 from './7702068.jpg'
+import header3 from './8997849.jpg'
 
 
 export const assets = {
+    header1,
+    header2,
+    header3,
     appointment_img,
     header_img,
     group_profiles,

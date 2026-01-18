@@ -31,7 +31,7 @@ export default function Navbar() {
           <Link href={"/"} className="hover:bg-blue-700 transition">
             Home
           </Link>
-          <Link href={"/doctor"} className="hover:bg-blue-700 transition">
+          <Link href={"/doctors"} className="hover:bg-blue-700 transition">
             All Doctors
           </Link>
           <Link href={"/about"}>About</Link>
