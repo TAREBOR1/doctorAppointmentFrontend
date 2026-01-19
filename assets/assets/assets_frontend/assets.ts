@@ -100,6 +100,11 @@ export const specialityData:speciality[] = [
     line1:string;
     line2:string
   }
+
+  export interface docSlot{
+     dateTime: Date; 
+     time: string; 
+  }
 export interface doctorType{
     _id:string;
     name:string

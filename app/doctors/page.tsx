@@ -9,19 +9,27 @@ const page = () => {
 
   const router=useRouter()
 
+   const specialties = [
+    "General Physician",
+    "Gastroenterologist",
+    "Paedatrician",
+    "Dermatologist",
+    "Gynecologist",
+    "Neurologist",
+  ];
+
   return (
     <div>
-      <p>Browse through doctors specialist</p>
-      <div>
-        <div>
-          <p>General Physician</p>
-          <p>Gastroenterologit</p>
-          <p>paedatrician</p>
-          <p>Dermatologist</p>
-          <p>Gynecologist</p>
-          <p>Neurologist</p>
+      <p className='text-gray-600'>Browse through doctors specialist</p>
+      <div className='flex flex-col sm:flex-row items-start gap-5 mt-5'>
+        <div className='flex-col gap-4 text-sm text-gray-600'>
+          {
+            specialties.map((sp,index)=>(
+               <p key={index} onClick={()=>{router.push(`/doctors/${sp}`)}} className={`w-[94vh] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer`}>{sp}</p>
+            ))
+          }
         </div>
-        <div>
+       <div className='grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-y-6 gap-4 w-full'>
       {
         doctors.map((doctor,index)=>(
                     <div onClick={()=>{router.push(`/appointment/${doctor._id}`)}} className='border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-4 transition-all duration-500' key={index}>
