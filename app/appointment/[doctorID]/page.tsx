@@ -1,19 +1,21 @@
 "use client"
 
 import { assets, docSlot, doctors, doctorType } from '@/assets/assets/assets_frontend/assets'
+import RelatedDoctor from '@/components/RelatedDoctor'
 import { Klee_One } from 'next/font/google'
 import Image from 'next/image'
 import { useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 const page = () => {
-  const {doctorID}=useParams()
+  const {doctorID}=useParams<{doctorID:string}>()
  const [docInf,setDocInf]=useState<doctorType|null>(null)
  const [docSlot,setDocSlot]=useState<docSlot[]>([])
 
  const [groupedSlots, setGroupedSlots] = useState<{[key: string]: docSlot[]}>({})
 
  const [slotIndex,setSlotIndex]=useState(0)
+ const [selectedDate,setSelectedDate]=useState('')
  const [slotTime,setSlotTime]=useState('')
  const daysOfWeek=['SUN','MON','TUE','WED','THUR','FRI','SAT']
 
@@ -95,8 +97,13 @@ getAvailableSlot()
     if (docSlot.length > 0) {
       setGroupedSlots(groupSlotsByDay(docSlot));
     }
-      console.log(docSlot,'checkigg')
+
   }, [docSlot]);
+
+    const handleDateClick = (dateKey: string) => {
+    setSelectedDate(dateKey);
+    setSlotTime(''); 
+  }
   return docInf && (
     <div>
          {/* doctor details */}
@@ -126,38 +133,41 @@ getAvailableSlot()
          
          <div className='sm:ml-72 sm:pl-4 mt-4 font-medium text-gray-700'>
           <p>Booking slots</p>
-           <div>
+
+        <div className='flex gap-3 items-center w-full overflow-x-scroll mt-4'>
           {Object.keys(groupedSlots).length > 0 && 
-            Object.keys(groupedSlots).map((dateKey, index) => {
-              const date = new Date(dateKey);
-              const daySlots = groupedSlots[dateKey];
-              
-              return (
-                <div key={dateKey} className='mb-4 p-4 border rounded-lg'>
-                  <p className='font-bold'>
-                    {daysOfWeek[date.getDay()]} - {date.toLocaleDateString()}
-                  </p>
-                  <div className='flex flex-wrap gap-2 mt-2'>
-                    {daySlots.map((slot, slotIndex) => (
-                      <button 
-                        key={slotIndex}
-                        className='px-3 py-2 border rounded-lg hover:bg-blue-50'
-                        onClick={() => {
-                          // Handle slot selection
-                          setSlotIndex(slotIndex);
-                          setSlotTime(slot.time);
-                        }}
-                      >
-                        {slot.time}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              );
-            })
+            Object.keys(groupedSlots).map((dateKey,index)=>{
+               const date = new Date(dateKey);
+               const isSelect=selectedDate===dateKey
+            
+              return(
+                 <div onClick={() => handleDateClick(dateKey)} 
+ className={`text-center py-6 min-w-16 rounded-full cursor-pointer ${isSelect? 'bg-primary text-white':'border border-gray-200'}`} key={index}>
+         <p>{daysOfWeek[date.getDay()]}</p>
+         <p>{date.getDate()}</p>
+              </div>
+              )
+            
+          })}
+        </div>
+
+        <div>
+          {
+          selectedDate && groupedSlots[selectedDate] && (
+            <div className='flex items-center gap-3 w-full overflow-x-scroll mt-4'>
+              {groupedSlots[selectedDate].map((slot,index)=>(
+                <p onClick={()=>{setSlotTime(slot.time)}} className={`text-sm font-light flex-shrink-0 px-5 py-2 rounded-full cursor-pointer ${slot.time===slotTime?'bg-primary text-white':'text-gray-400 border border-gray-200'}`} key={index}>{slot.time.toLowerCase()}</p>
+              ))}
+            </div>
+          )
           }
         </div>
 
+        <div>
+          <button className='bg-primary text-white font-light text-sm px-14 py-3 rounded-full my-6'>Book an apppointment</button>
+        </div>
+    {/* listing related doctors */}
+    <RelatedDoctor doctorID={doctorID} specialty={docInf.speciality}/>
          </div>
     </div>
   )

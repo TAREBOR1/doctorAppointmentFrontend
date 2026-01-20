@@ -66,7 +66,7 @@ export default function Navbar() {
     </div>
   ) : (
     <button
-      className="hidden md:block px-6 py-2.5 bg-pink-600 hover:bg-pink-700 active:scale-95 transition-all rounded-full"
+      className="hidden md:block px-6 py-2.5 bg-primary hover:bg-blue-700 active:scale-95 text-gray-100 transition-all rounded-full"
       onClick={() => router.push("/login")}
     >
       Get started
