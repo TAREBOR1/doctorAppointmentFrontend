@@ -88,8 +88,14 @@ export default function Navbar() {
 
 
       <div
-        className={`fixed inset-0 z-100 bg-black/40 backdrop-blur flex flex-col items-center justify-center text-lg gap-8 md:hidden transition-transform duration-400 ${isOpenMenu ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed inset-0  z-100 bg-black/40 backdrop-blur flex flex-col items-center justify-center text-lg gap-8 md:hidden transition-transform duration-400 ${isOpenMenu ? "translate-x-0" : "-translate-x-full"}`}
       >
+          <button
+          onClick={() => setIsOpenMenu(false)}
+          className=" top-0 right-0 active:ring-3 active:ring-white aspect-square size-10 p-1 items-center justify-center bg-primary hover:bg-blue-700 transition text-white rounded-md flex"
+        >
+          <XIcon />
+        </button>
         <Link href={"/"}>Home</Link>
         <Link onClick={() => setIsOpenMenu(false)} href={"/doctors"}>
           All Doctors
@@ -103,12 +109,7 @@ export default function Navbar() {
         <Link onClick={() => setIsOpenMenu(false)} href={"/login"}>
           Login
         </Link>
-        <button
-          onClick={() => setIsOpenMenu(false)}
-          className="active:ring-3 active:ring-white aspect-square size-10 p-1 items-center justify-center bg-primary hover:bg-blue-700 transition text-white rounded-md flex"
-        >
-          <XIcon />
-        </button>
+      
       </div>
     </>
   );
