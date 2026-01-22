@@ -9,6 +9,7 @@ import { useParams } from 'next/navigation'
 const page = () => {
   const {specialty}=useParams()
   const [filterDoc,setFilterDoc]=useState<doctorType[]>([])
+    const [showFilter,setShowFilter]=useState(false)
   const router=useRouter()
 
   const applyFilter=()=>{
@@ -32,10 +33,13 @@ const page = () => {
   },[doctors,specialty])
 
   return (
-    <div>
+    <div className="mt-12">
       <p className='text-gray-600'>Browse through doctors specialist</p>
       <div className='flex flex-col sm:flex-row items-start gap-5 mt-5'>
-        <div className='flex-col gap-4 text-sm text-gray-600'>
+               <button className={`py-1 px-3 border rounded text-sm transition-all sm:hidden ${showFilter?"bg-primary text-white":''}`} onClick={()=>{setShowFilter(prev=>!prev)}}>
+          Filters
+        </button>
+        <div className={`flex-col gap-4 text-sm text-gray-600 ${showFilter? 'flex':'hidden sm:flex'}`}>
           {specialties.map((sp,index)=>(
      <p key={index} onClick={()=>{specialty===sp?router.push(`/doctors`):router.push(`/doctors/${sp}`)}} className={`w-[94vh] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${specialty===sp? 'bg-indigo-100 text-black':''}`}>{sp}</p>
           ))}
