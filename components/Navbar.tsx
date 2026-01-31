@@ -1,5 +1,6 @@
 "use client";
 import { assets } from "@/assets/assets/assets_frontend/assets";
+import { useAuth } from "@/hooks/useUser";
 import { MenuIcon, XIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,11 +9,10 @@ import { useState } from "react";
 
 export default function Navbar() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const [token,setToken]=useState(true)
-  const [loading,setLoading]=useState(true)
   const [open,setOpen]=useState(false)
   const router=useRouter()
-
+  const {isAuthenticated, isLoading,logout,user}=useAuth();
+ 
   return (
     <>
       <nav className="fixed top-0 z-50 flex items-center justify-between w-full py-4 px-6 md:px-16 lg:px-24 xl:px-32 backdrop-blur border-b border-b-gray-300">
@@ -42,13 +42,13 @@ export default function Navbar() {
         <div className="flex items-center gap-2">
 
 
-            {loading && (
-  token ? (
+            {!isLoading && (
+  isAuthenticated ? (
     <div className="relative">
       <button
         className=" flex items-center gap-2 cursor-pointer"
         onClick={() => setOpen(!open)}>
-        <Image src={assets.profile_pic} width={40} alt="profile pic" className="rounded-full" height={40}></Image>
+        <Image src={user?.image} width={40} alt="profile pic" className="rounded-full" height={40}></Image>
         <Image src={assets.dropdown_icon} width={10} alt="profile pic" className="" height={5}></Image>
       </button>
 
@@ -59,7 +59,7 @@ export default function Navbar() {
           >
             <p onClick={()=>{router.push('/myprofile')}} className="text-black cursor-pointer">My profile</p>
             <p onClick={()=>{router.push('/myappointment')}} className="text-black cursor-pointer">my appointment</p>
-            <p className="text-black cursor-pointer">Logout</p>
+            <p onClick={()=>{logout.mutate()}} className="text-black cursor-pointer">Logout</p>
           </div>
         </div>
       )}

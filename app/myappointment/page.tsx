@@ -1,8 +1,14 @@
+"use client"
+
 import { doctors } from '@/assets/assets/assets_frontend/assets'
+import { useFunc } from '@/hooks/useDoc'
 import Image from 'next/image'
 import React from 'react'
 
 const page = () => {
+  const {appointment,loadingAppointment}=useFunc()
+
+  console.log(appointment,'oya na see aparti')
   return (
     <div>
       <p className='pb-3 mt-12 font-medium text-zinc-700 border-b'>My appointments</p>

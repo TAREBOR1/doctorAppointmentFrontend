@@ -1,9 +1,30 @@
 @import "tailwindcss";
 
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+  box-shadow: 0 0 0 1000px white inset !important;
+  -webkit-text-fill-color: #111827 !important; 
+  transition: background-color 9999s ease-in-out 0s;
+}
+
 
 ::-webkit-scrollbar{
   @apply hidden
@@ -14,7 +35,8 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --color-primary:#5f6fff
+  --color-primary:#5f6fff;
+  --animate-shimmer: shimmer 2s infinite linear;
 }
 
 @media (prefers-color-scheme: dark) {

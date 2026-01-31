@@ -1,18 +1,26 @@
 "use client"
 
+
+import { useAuth } from "@/hooks/useUser"
 import { useState } from "react"
 
 const page = () => {
     const [state, setState] = useState("Sign up")
+    const{isLoading,login,logout,register}=useAuth()
 
     const [formData, setFormData] = useState({
-        fullname: '',
+        name: '',
         email: '',
         password: ''
     })
 
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        const loginPayload={
+            email:formData.email,
+            password:formData.password
+        }
+        state==="Sign up" ? register.mutate(formData):login.mutate(loginPayload)
 
     }
 
@@ -38,13 +46,13 @@ const page = () => {
             {state === "Sign up" && (
                 <div className="flex items-center mt-6 w-full border border-gray-700 h-12 rounded-full overflow-hidden pl-6 gap-2 ">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="text-gray-400" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"> <circle cx="12" cy="8" r="5" /> <path d="M20 21a8 8 0 0 0-16 0" /> </svg>
-                    <input type="text" name="fullname" placeholder="Full name" className="w-full bg-transparent text-gray-600 placeholder-gray-400 border-none outline-none " value={formData.fullname} onChange={handleChange} required />
+                    <input type="text" name="name" placeholder="Full name" className="w-full bg-transparent text-gray-600 placeholder-gray-400 border-none focus:outline-none  outline-none " value={formData.name} onChange={handleChange} required />
                 </div>
             )}
 
             <div className="flex items-center w-full mt-4  border border-gray-700 h-12 rounded-full overflow-hidden pl-6 gap-2 ">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="text-gray-400" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"> <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /> <rect x="2" y="4" width="20" height="16" rx="2" /> </svg>
-                <input type="email" name="email" placeholder="Email address" className="w-full bg-transparent text-gray-600 placeholder-gray-400 border-none outline-none " value={formData.email} onChange={handleChange} required />
+                <input type="email" name="email" placeholder="Email address" className="w-full bg-transparent text-gray-600 placeholder-gray-400 border-none outline-none focus:outline-none focus:bg-transparent " value={formData.email} onChange={handleChange} required />
             </div>
 
             <div className=" flex items-center mt-4 w-full  border border-gray-700 h-12 rounded-full overflow-hidden pl-6 gap-2 ">

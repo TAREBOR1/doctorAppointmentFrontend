@@ -1,6 +1,7 @@
 "use client"
 
-import { doctors, doctorType} from '@/assets/assets/assets_frontend/assets'
+import { useFunc } from '@/hooks/useDoc'
+import { getDoc } from '@/services/doctor'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
@@ -13,10 +14,12 @@ type DoctorProp={
 }
 
 const RelatedDoctor:React.FC<DoctorProp> = ({doctorID,specialty}) => {
+    const {doctors}=useFunc();
     const router=useRouter()
-    const [relDoc,setRelDoc]=useState<doctorType[]>([])
+    const [relDoc,setRelDoc]=useState<getDoc[]>([])
+
     useEffect(()=>{
-    if(doctors.length>0 && specialty){
+    if(doctors && doctors.length>0 && specialty){
       const doctorData= doctors.filter((doc)=>doc.speciality===specialty && doc._id!==doctorID)
       setRelDoc(doctorData)
     }
